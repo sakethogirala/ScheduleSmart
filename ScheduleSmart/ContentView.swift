@@ -77,8 +77,8 @@ struct ContentView: View {
         let userMessage = Message(content: userInput, isUserMessage: true)
         messages.append(userMessage)
         
-//        let apiKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] // Use environment variable for the API key
-        let apiKey = "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"
+
+        let apiKey = ""
         
         guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
             errorMessage = "Invalid URL"
@@ -223,6 +223,31 @@ struct ChatbotView: View {
                         .cornerRadius(8)
                 }
                 .padding(.trailing, 8)
+            }
+            .padding()
+        }
+    }
+}
+
+struct CalendarView: View {
+    var body: some View {
+        VStack{
+            Text("Calendar View") // Placeholder for actual calendar view implementation
+                .font(.title)
+                .padding()
+        }
+    }
+}
+
+struct EventListView: View {
+    let events: [EKEvent]
+    
+    var body: some View {
+        List(events) { event in
+            VStack(alignment: .leading) {
+                Text(event.title)
+                    .font(.headline)
+                Text(event.startDate, style: .time)
             }
             .padding()
         }

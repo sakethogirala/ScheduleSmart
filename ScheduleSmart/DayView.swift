@@ -9,26 +9,40 @@ import SwiftUI
 import EventKit
 
 struct DayView: View {
+    @State private var selectedSegment = 0
     @ObservedObject var calendarManager = CalendarManager()
+    private var currentDate: String{
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        return formatter.string(from: Date())
+    }
     
     var body: some View {
         VStack {
-            Text("Today")
-                .font(.largeTitle)
+            Text(currentDate)
+                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                 .padding()
+                .bold()
                 .underline()
             
-            List(calendarManager.events.filter { Calendar.current.isDateInToday($0.startDate) }) { event in
-                VStack(alignment: .leading) {
-                    Text(event.title)
-                        .font(.headline)
-                    Text(event.startDate, style: .time)
-                }
+            Picker("", selection: $selectedSegment) {
+                Text("Calendar").tag(0)
+                Text("Events").tag(1)
             }
-            .onAppear {
-                calendarManager.requestAccess()
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+            
+            if selectedSegment == 0 {
+                CalendarView()
+            } else {
+                EventListView(events: calendarManager.events.filter { Calendar.current.isDateInToday($0.startDate) })
+                    .onAppear {
+                        calendarManager.requestAccess()
+                    }
             }
+            Spacer()
         }
+        .frame(maxHeight: .infinity, alignment: .top)
     }
 }
 
