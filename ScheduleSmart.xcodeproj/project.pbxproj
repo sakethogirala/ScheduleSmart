@@ -14,6 +14,13 @@
 		1BA019F32C19226000B071A3 /* ScheduleSmartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA019F22C19226000B071A3 /* ScheduleSmartTests.swift */; };
 		1BA019FD2C19226000B071A3 /* ScheduleSmartUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA019FC2C19226000B071A3 /* ScheduleSmartUITests.swift */; };
 		1BA019FF2C19226000B071A3 /* ScheduleSmartUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA019FE2C19226000B071A3 /* ScheduleSmartUITestsLaunchTests.swift */; };
+		1BA01A0C2C2B62FF00B071A3 /* RegistrationPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A0B2C2B62FF00B071A3 /* RegistrationPage.swift */; };
+		1BA01A102C2B636900B071A3 /* HomeViewPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A0F2C2B636900B071A3 /* HomeViewPage.swift */; };
+		1BA01A122C2B642700B071A3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A112C2B642700B071A3 /* LoginView.swift */; };
+		1BA01A152C2B6E9F00B071A3 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A142C2B6E9F00B071A3 /* CalendarManager.swift */; };
+		1BA01A172C2B70D700B071A3 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A162C2B70D700B071A3 /* DayView.swift */; };
+		1BA01A192C2B70E900B071A3 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A182C2B70E900B071A3 /* WeekView.swift */; };
+		1BA01A1B2C2B70F300B071A3 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A1A2C2B70F300B071A3 /* MonthView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +51,14 @@
 		1BA019F82C19226000B071A3 /* ScheduleSmartUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScheduleSmartUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BA019FC2C19226000B071A3 /* ScheduleSmartUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSmartUITests.swift; sourceTree = "<group>"; };
 		1BA019FE2C19226000B071A3 /* ScheduleSmartUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSmartUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1BA01A0B2C2B62FF00B071A3 /* RegistrationPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationPage.swift; sourceTree = "<group>"; };
+		1BA01A0F2C2B636900B071A3 /* HomeViewPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPage.swift; sourceTree = "<group>"; };
+		1BA01A112C2B642700B071A3 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		1BA01A132C2B6D4C00B071A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1BA01A142C2B6E9F00B071A3 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
+		1BA01A162C2B70D700B071A3 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
+		1BA01A182C2B70E900B071A3 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
+		1BA01A1A2C2B70F300B071A3 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,8 +109,16 @@
 		1BA019E02C19225E00B071A3 /* ScheduleSmart */ = {
 			isa = PBXGroup;
 			children = (
+				1BA01A132C2B6D4C00B071A3 /* Info.plist */,
 				1BA019E12C19225E00B071A3 /* ScheduleSmartApp.swift */,
 				1BA019E32C19225E00B071A3 /* ContentView.swift */,
+				1BA01A0B2C2B62FF00B071A3 /* RegistrationPage.swift */,
+				1BA01A0F2C2B636900B071A3 /* HomeViewPage.swift */,
+				1BA01A112C2B642700B071A3 /* LoginView.swift */,
+				1BA01A142C2B6E9F00B071A3 /* CalendarManager.swift */,
+				1BA01A162C2B70D700B071A3 /* DayView.swift */,
+				1BA01A182C2B70E900B071A3 /* WeekView.swift */,
+				1BA01A1A2C2B70F300B071A3 /* MonthView.swift */,
 				1BA019E52C19225F00B071A3 /* Assets.xcassets */,
 				1BA019E72C19225F00B071A3 /* Preview Content */,
 			);
@@ -257,7 +280,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BA01A192C2B70E900B071A3 /* WeekView.swift in Sources */,
+				1BA01A172C2B70D700B071A3 /* DayView.swift in Sources */,
 				1BA019E42C19225E00B071A3 /* ContentView.swift in Sources */,
+				1BA01A0C2C2B62FF00B071A3 /* RegistrationPage.swift in Sources */,
+				1BA01A102C2B636900B071A3 /* HomeViewPage.swift in Sources */,
+				1BA01A152C2B6E9F00B071A3 /* CalendarManager.swift in Sources */,
+				1BA01A122C2B642700B071A3 /* LoginView.swift in Sources */,
+				1BA01A1B2C2B70F300B071A3 /* MonthView.swift in Sources */,
 				1BA019E22C19225E00B071A3 /* ScheduleSmartApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,6 +454,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ScheduleSmart/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ScheduleSmart/Info.plist;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "We need access to your calendar to show your events.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -452,6 +484,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ScheduleSmart/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ScheduleSmart/Info.plist;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "We need access to your calendar to show your events.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
