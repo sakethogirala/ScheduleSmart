@@ -78,7 +78,7 @@ struct ContentView: View {
         messages.append(userMessage)
         
 
-        let apiKey = ""
+        let apiKey = "sk-proj-sTMCQVLqzjZRX8x18ggdT3BlbkFJH35tvjy0BurbTVVd0Cd0"
         
         guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
             errorMessage = "Invalid URL"
@@ -229,27 +229,37 @@ struct ChatbotView: View {
     }
 }
 
-struct CalendarView: View {
-    var body: some View {
-        VStack{
-            Text("Calendar View") // Placeholder for actual calendar view implementation
-                .font(.title)
-                .padding()
-        }
-    }
-}
-
 struct EventListView: View {
     let events: [EKEvent]
+    @Binding var selectedDate: Date?
     
     var body: some View {
-        List(events) { event in
-            VStack(alignment: .leading) {
-                Text(event.title)
+        VStack {
+            if let selectedDate = selectedDate {
+                
+                Text(selectedDate, style: .date)
                     .font(.headline)
-                Text(event.startDate, style: .time)
+                    .padding()
+                    .underline()
+                
+                ScrollView {
+                    ForEach(events.filter { Calendar.current.isDate($0.startDate, inSameDayAs: selectedDate) }) { event in
+                        VStack(alignment: .leading) {
+                            Text(event.title)
+                                .font(.headline)
+                            Text(event.startDate, style: .time)
+                        }
+                        .padding()
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                    }
+                }
+            } else {
+                Text("No Date Selected")
+                    .font(.headline)
+                    .padding()
             }
-            .padding()
         }
     }
 }

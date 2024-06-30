@@ -12,6 +12,8 @@ import EventKit
 struct MonthView: View {
     @ObservedObject var calendarManager = CalendarManager()
     @State private var selectedSegment = 0
+    @State private var selectedDate: Date? = Date()
+    
     private var currentDate: String{
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM YYYY"
@@ -34,9 +36,16 @@ struct MonthView: View {
             .padding()
             
             if selectedSegment == 0 {
-                CalendarView()
+                CalendarView(selectedDate: $selectedDate)
+                    .frame(maxHeight: 400) // Adjust height as needed
+                if let selectedDate = selectedDate {
+                    HourEventsView(events: calendarManager.events, selectedDate: selectedDate)
+                        .onAppear {
+                            calendarManager.requestAccess()
+                        }
+                }
             } else {
-                EventListView(events: calendarManager.events)
+                EventListView(events: calendarManager.events, selectedDate: $selectedDate)
                     .onAppear {
                         calendarManager.requestAccess()
                     }

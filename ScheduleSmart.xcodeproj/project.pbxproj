@@ -21,6 +21,9 @@
 		1BA01A172C2B70D700B071A3 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A162C2B70D700B071A3 /* DayView.swift */; };
 		1BA01A192C2B70E900B071A3 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A182C2B70E900B071A3 /* WeekView.swift */; };
 		1BA01A1B2C2B70F300B071A3 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A1A2C2B70F300B071A3 /* MonthView.swift */; };
+		1BA01A1E2C2F561600B071A3 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1BA01A1D2C2F561600B071A3 /* FSCalendar */; };
+		1BA01A202C2F585E00B071A3 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A1F2C2F585E00B071A3 /* CalendarView.swift */; };
+		1BA01A222C31E14300B071A3 /* HourEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A212C31E14300B071A3 /* HourEventsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +62,8 @@
 		1BA01A162C2B70D700B071A3 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		1BA01A182C2B70E900B071A3 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		1BA01A1A2C2B70F300B071A3 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
+		1BA01A1F2C2F585E00B071A3 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		1BA01A212C31E14300B071A3 /* HourEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourEventsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BA01A1E2C2F561600B071A3 /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,10 +120,12 @@
 				1BA019E32C19225E00B071A3 /* ContentView.swift */,
 				1BA01A0B2C2B62FF00B071A3 /* RegistrationPage.swift */,
 				1BA01A0F2C2B636900B071A3 /* HomeViewPage.swift */,
+				1BA01A1F2C2F585E00B071A3 /* CalendarView.swift */,
 				1BA01A112C2B642700B071A3 /* LoginView.swift */,
 				1BA01A142C2B6E9F00B071A3 /* CalendarManager.swift */,
 				1BA01A162C2B70D700B071A3 /* DayView.swift */,
 				1BA01A182C2B70E900B071A3 /* WeekView.swift */,
+				1BA01A212C31E14300B071A3 /* HourEventsView.swift */,
 				1BA01A1A2C2B70F300B071A3 /* MonthView.swift */,
 				1BA019E52C19225F00B071A3 /* Assets.xcassets */,
 				1BA019E72C19225F00B071A3 /* Preview Content */,
@@ -166,6 +174,9 @@
 			dependencies = (
 			);
 			name = ScheduleSmart;
+			packageProductDependencies = (
+				1BA01A1D2C2F561600B071A3 /* FSCalendar */,
+			);
 			productName = ScheduleSmart;
 			productReference = 1BA019DE2C19225E00B071A3 /* ScheduleSmart.app */;
 			productType = "com.apple.product-type.application";
@@ -238,6 +249,9 @@
 				Base,
 			);
 			mainGroup = 1BA019D52C19225E00B071A3;
+			packageReferences = (
+				1BA01A1C2C2F561600B071A3 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+			);
 			productRefGroup = 1BA019DF2C19225E00B071A3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -280,11 +294,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BA01A202C2F585E00B071A3 /* CalendarView.swift in Sources */,
 				1BA01A192C2B70E900B071A3 /* WeekView.swift in Sources */,
 				1BA01A172C2B70D700B071A3 /* DayView.swift in Sources */,
 				1BA019E42C19225E00B071A3 /* ContentView.swift in Sources */,
 				1BA01A0C2C2B62FF00B071A3 /* RegistrationPage.swift in Sources */,
 				1BA01A102C2B636900B071A3 /* HomeViewPage.swift in Sources */,
+				1BA01A222C31E14300B071A3 /* HourEventsView.swift in Sources */,
 				1BA01A152C2B6E9F00B071A3 /* CalendarManager.swift in Sources */,
 				1BA01A122C2B642700B071A3 /* LoginView.swift in Sources */,
 				1BA01A1B2C2B70F300B071A3 /* MonthView.swift in Sources */,
@@ -616,6 +632,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1BA01A1C2C2F561600B071A3 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1BA01A1D2C2F561600B071A3 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1BA01A1C2C2F561600B071A3 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1BA019D62C19225E00B071A3 /* Project object */;
 }
