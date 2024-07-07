@@ -15,6 +15,7 @@ struct WeekView: View {
     @State private var selectedSegment = 0
     @ObservedObject var calendarManager = CalendarManager()
     @State private var selectedDate: Date? = Date()
+    @State private var showingEventCreation = false // Add this line
     
     private var currentDate: String{
         let formatter = DateFormatter()
@@ -51,14 +52,43 @@ struct WeekView: View {
                         }
                 }
             } else {
-                if let selectedDate = selectedDate {
-                    EventListView(events: calendarManager.events.filter { Calendar.current.isDate($0.startDate, inSameDayAs: selectedDate) }, selectedDate: $selectedDate)
-                        .onAppear {
-                            calendarManager.requestAccess()
+                List(calendarManager.events.filter { Calendar.current.isDate($0.startDate, equalTo: Date(), toGranularity: .weekOfYear) }) { event in
+                    VStack(alignment: .leading) {
+                        Text(event.title)
+                            .font(.headline)
+                        Text(event.startDate, style: .date)
+                        Text(event.startDate, style: .time)
+                    }
+                }
+                .onAppear {
+                    calendarManager.requestAccess()
+                }
+                
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            showingEventCreation = true
+                        }) {
+                            Image(systemName: "plus")
+                                .font(.system(size: 24, weight: .bold))
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .clipShape(Circle())
+                                .shadow(radius: 5)
                         }
-                } else {
-                    Text("Select a date to see events")
                         .padding()
+                        .sheet(isPresented: $showingEventCreation) {
+                            EventCreationView(eventStore: calendarManager.eventStore)
+                        }
+                    }
+                }
+                .padding(.trailing, 16)
+                .padding(.bottom, 16)
+                .onAppear {
+                    calendarManager.requestAccess()
                 }
             }
             Spacer()

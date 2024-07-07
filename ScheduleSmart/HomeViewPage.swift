@@ -8,7 +8,7 @@ struct HomePageView: View {
         NavigationView {
             VStack {
                 Spacer()
-                Text("Welcome to Schedule Smart")
+                Text("Welcome to ScheduleSmart")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding()

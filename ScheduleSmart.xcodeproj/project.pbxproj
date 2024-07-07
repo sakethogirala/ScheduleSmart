@@ -24,6 +24,7 @@
 		1BA01A1E2C2F561600B071A3 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1BA01A1D2C2F561600B071A3 /* FSCalendar */; };
 		1BA01A202C2F585E00B071A3 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A1F2C2F585E00B071A3 /* CalendarView.swift */; };
 		1BA01A222C31E14300B071A3 /* HourEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA01A212C31E14300B071A3 /* HourEventsView.swift */; };
+		1BB1FD532C387447001A697E /* EventCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1FD522C387447001A697E /* EventCreationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		1BA01A1A2C2B70F300B071A3 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
 		1BA01A1F2C2F585E00B071A3 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		1BA01A212C31E14300B071A3 /* HourEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourEventsView.swift; sourceTree = "<group>"; };
+		1BB1FD522C387447001A697E /* EventCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCreationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 				1BA01A182C2B70E900B071A3 /* WeekView.swift */,
 				1BA01A212C31E14300B071A3 /* HourEventsView.swift */,
 				1BA01A1A2C2B70F300B071A3 /* MonthView.swift */,
+				1BB1FD522C387447001A697E /* EventCreationView.swift */,
 				1BA019E52C19225F00B071A3 /* Assets.xcassets */,
 				1BA019E72C19225F00B071A3 /* Preview Content */,
 			);
@@ -294,6 +297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BB1FD532C387447001A697E /* EventCreationView.swift in Sources */,
 				1BA01A202C2F585E00B071A3 /* CalendarView.swift in Sources */,
 				1BA01A192C2B70E900B071A3 /* WeekView.swift in Sources */,
 				1BA01A172C2B70D700B071A3 /* DayView.swift in Sources */,
@@ -465,6 +469,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScheduleSmart/Preview Content\"";
@@ -495,6 +500,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScheduleSmart/Preview Content\"";

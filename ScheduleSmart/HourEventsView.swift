@@ -39,6 +39,9 @@ struct HourEventsView: View {
                                     EventView(event: event)
                                 }
                             }
+                            if hour == String(format: "%02d:00", Calendar.current.component(.hour, from: Date())) {
+                                LiveLine()
+                            }
                         }
                     )
                 }

@@ -19,6 +19,8 @@ struct ContentView: View {
     @State private var userInput: String = ""
     @State private var selectedTab: Int = 0 // Track selected tab
     @State private var errorMessage: String? = nil // Error message state
+    @ObservedObject private var calendarManager = CalendarManager()
+    @State public var showingEventCreation = false
 
     var body: some View {
         ZStack {
@@ -28,8 +30,8 @@ struct ContentView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
-                // title of the app
-                Text("Schedule Smart").font(.system(size: 32, weight: .medium, design: .default))
+                Text("Schedule Smart")
+                    .font(.system(size: 32, weight: .medium, design: .default))
                     .foregroundColor(.white)
                     .padding()
                     .background(Color.black)
@@ -39,7 +41,6 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                // Custom TabView at the bottom
                 TabView(selection: $selectedTab) {
                     DayView()
                         .tabItem {
@@ -66,19 +67,38 @@ struct ContentView: View {
                         .tag(3)
                 }
                 .accentColor(.black)
+                
             }
+            
+            
         }
     }
 
-    func sendRequest() {
+func sendRequest() {
         guard !userInput.isEmpty else { return }
         
-        // Append user's message to the conversation
         let userMessage = Message(content: userInput, isUserMessage: true)
         messages.append(userMessage)
         
-
-        let apiKey = "sk-proj-sTMCQVLqzjZRX8x18ggdT3BlbkFJH35tvjy0BurbTVVd0Cd0"
+        let calendar = Calendar.current
+        let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date()))!
+        let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)!
+        
+        let calendars = calendarManager.getEventStore().calendars(for: .event)
+        let predicate = calendarManager.getEventStore().predicateForEvents(withStart: startOfWeek, end: endOfWeek, calendars: calendars)
+        let events = calendarManager.getEventStore().events(matching: predicate)
+        
+        let eventsString = events.map { event in
+            "\(event.startDate.formatted(date: .numeric, time: .shortened)) - \(event.endDate.formatted(date: .numeric, time: .shortened)): \(String(describing: event.title))"
+        }.joined(separator: "\n")
+        
+        print(eventsString)
+        
+        let prompt = "Here is the schedule for the week:\n\(eventsString)\n\nUser input: \(userInput)"
+        
+        let apiKey = "sk-proj-ZokzbPkkeSmwc9G6kCcXT3BlbkFJvjMo8CPUxsiVlCIT7u8y"
+        
+        
         
         guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
             errorMessage = "Invalid URL"
@@ -93,7 +113,7 @@ struct ContentView: View {
         let body: [String: Any] = [
             "model": "gpt-3.5-turbo",
             "messages": [
-                ["role": "user", "content": userInput]
+                ["role": "user", "content": prompt]
             ]
         ]
         
@@ -109,8 +129,6 @@ struct ContentView: View {
             
             do {
                 if let jsonResponse = try JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                    print("Response JSON: \(jsonResponse)") // Debugging print statement
-                    
                     if let choices = jsonResponse["choices"] as? [[String: Any]],
                        let message = choices.first?["message"] as? [String: Any],
                        let content = message["content"] as? String {
@@ -119,6 +137,7 @@ struct ContentView: View {
                             self.messages.append(botMessage)
                             self.errorMessage = nil
                             self.userInput = ""
+                            self.extractEventDetails(from: content)
                         }
                     } else {
                         DispatchQueue.main.async {
@@ -138,6 +157,43 @@ struct ContentView: View {
         }
         
         task.resume()
+    }
+
+    func extractEventDetails(from response: String) {
+        print("Hi")
+        let eventPattern = #"\b(\d{1,2}/\d{1,2}/\d{4})\b - \b(\d{1,2}:\d{2} (?:AM|PM))\b - \b(\d{1,2}:\d{2} (?:AM|PM))\b: ([^\n]+)"#
+        
+        let regex = try! NSRegularExpression(pattern: eventPattern, options: [])
+        let matches = regex.matches(in: response, options: [], range: NSRange(location: 0, length: response.utf16.count))
+        
+        for match in matches {
+            if match.numberOfRanges == 5 {
+                let dateRange = match.range(at: 1)
+                let startTimeRange = match.range(at: 2)
+                let endTimeRange = match.range(at: 3)
+                let titleRange = match.range(at: 4)
+                
+                if let dateRange = Range(dateRange, in: response),
+                   let startTimeRange = Range(startTimeRange, in: response),
+                   let endTimeRange = Range(endTimeRange, in: response),
+                   let titleRange = Range(titleRange, in: response) {
+                    
+                    let date = String(response[dateRange])
+                    let startTime = String(response[startTimeRange])
+                    let endTime = String(response[endTimeRange])
+                    let title = String(response[titleRange])
+                    
+                    print("Event: \(title)")
+                    print("Hi")
+                    print("Date: \(date)")
+                    print("Start Time: \(startTime)")
+                    print("End Time: \(endTime)")
+                    print("---------------------------")
+                    
+                    // Handle the extracted event details (e.g., display them, store them, etc.)
+                }
+            }
+        }
     }
 }
 
@@ -232,33 +288,63 @@ struct ChatbotView: View {
 struct EventListView: View {
     let events: [EKEvent]
     @Binding var selectedDate: Date?
-    
+    @State private var showingEventCreation = false
+    @ObservedObject private var calendarManager = CalendarManager()
+
     var body: some View {
-        VStack {
-            if let selectedDate = selectedDate {
-                
-                Text(selectedDate, style: .date)
-                    .font(.headline)
-                    .padding()
-                    .underline()
-                
-                ScrollView {
-                    ForEach(events.filter { Calendar.current.isDate($0.startDate, inSameDayAs: selectedDate) }) { event in
-                        VStack(alignment: .leading) {
-                            Text(event.title)
-                                .font(.headline)
-                            Text(event.startDate, style: .time)
-                        }
+        ZStack {
+            VStack {
+                if let selectedDate = selectedDate {
+                    Text(selectedDate, style: .date)
+                        .font(.headline)
                         .padding()
-                        .background(Color(.secondarySystemBackground))
-                        .cornerRadius(10)
-                        .padding(.horizontal)
+                        .underline()
+                    
+                    ScrollView {
+                        ForEach(events.filter { Calendar.current.isDate($0.startDate, inSameDayAs: selectedDate) }) { event in
+                            VStack(alignment: .leading) {
+                                Text(event.title)
+                                    .font(.headline)
+                                Text(event.startDate, style: .time)
+                            }
+                            .padding()
+                            .background(Color(.secondarySystemBackground))
+                            .cornerRadius(10)
+                            .padding(.horizontal)
+                        }
+                    }
+                } else {
+                    Text("No Date Selected")
+                        .font(.headline)
+                        .padding()
+                }
+            }
+            
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        showingEventCreation = true
+                    }) {
+                        Image(systemName: "plus")
+                            .font(.system(size: 24, weight: .bold))
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .clipShape(Circle())
+                            .shadow(radius: 5)
+                    }
+                    .padding()
+                    .sheet(isPresented: $showingEventCreation) {
+                        EventCreationView(eventStore: calendarManager.getEventStore())
                     }
                 }
-            } else {
-                Text("No Date Selected")
-                    .font(.headline)
-                    .padding()
+            }
+            .padding(.trailing, 16)
+            .padding(.bottom, 16)
+            .onAppear {
+                calendarManager.requestAccess()
             }
         }
     }

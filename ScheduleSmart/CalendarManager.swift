@@ -2,7 +2,7 @@ import EventKit
 import SwiftUI
 
 class CalendarManager: ObservableObject {
-    private let eventStore = EKEventStore()
+    public let eventStore = EKEventStore()
     @Published var events: [EKEvent] = []
     
     func requestAccess() {
@@ -23,5 +23,8 @@ class CalendarManager: ObservableObject {
         DispatchQueue.main.async {
             self.events = self.eventStore.events(matching: predicate)
         }
+    }
+    func getEventStore() -> EKEventStore {
+                return eventStore
     }
 }

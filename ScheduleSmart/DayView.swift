@@ -5,6 +5,7 @@ struct DayView: View {
     @ObservedObject var calendarManager = CalendarManager()
     @State private var selectedSegment = 0
     @State private var selectedDate: Date? = Date()
+    @State private var showingEventCreation = false
 
     private var currentDate: String {
         let formatter = DateFormatter()
@@ -54,18 +55,51 @@ struct DayView: View {
                                             EventView(event: event)
                                         }
                                     }
+                                    if hour == String(format: "%02d:00", Calendar.current.component(.hour, from: Date())) {
+                                        LiveLine()
+                                    }
                                 }
                             )
                         }
                     }
                 }
             } else {
-                EventListView(events: calendarManager.events.filter {
-                    if let selectedDate = selectedDate {
-                        return Calendar.current.isDate($0.startDate, inSameDayAs: selectedDate)
+                List(calendarManager.events.filter { Calendar.current.isDateInToday($0.startDate) }) { event in
+                    VStack(alignment: .leading) {
+                        Text(event.title)
+                            .font(.headline)
+                        Text(event.startDate, style: .date)
+                        Text(event.startDate, style: .time)
                     }
-                    return false
-                }, selectedDate: $selectedDate)
+                }
+                
+                .onAppear {
+                    calendarManager.requestAccess()
+                }
+                
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            showingEventCreation = true
+                        }) {
+                            Image(systemName: "plus")
+                                .font(.system(size: 24, weight: .bold))
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .clipShape(Circle())
+                                .shadow(radius: 5)
+                        }
+                        .padding()
+                        .sheet(isPresented: $showingEventCreation) {
+                            EventCreationView(eventStore: calendarManager.eventStore)
+                        }
+                    }
+                }
+                .padding(.trailing, 16)
+                .padding(.bottom, 16)
                 .onAppear {
                     calendarManager.requestAccess()
                 }
@@ -97,5 +131,25 @@ struct EventView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 55)
         .padding(.top, CGFloat(Calendar.current.component(.minute, from: event.startDate)) * 60 / 60) // Position by minutes
+    }
+}
+
+struct LiveLine: View {
+    var body: some View {
+        TimelineView(.everyMinute) { context in
+            VStack(alignment: .leading) {
+                HStack {
+                    Rectangle()
+                        .foregroundColor(.red)
+                        .frame(height: 2)
+                    Text(DateFormatter.localizedString(from: context.date, dateStyle: .none, timeStyle: .short))
+                        .foregroundColor(.red)
+                        .font(.caption)
+                }
+                .offset(y: CGFloat(Calendar.current.component(.minute, from: context.date)))
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, 55)
+        }
     }
 }
