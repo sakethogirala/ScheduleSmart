@@ -21,8 +21,19 @@ struct ContentView: View {
     @State private var errorMessage: String? = nil // Error message state
     @ObservedObject private var calendarManager = CalendarManager()
     @State public var showingEventCreation = false
-
+    @State private var isLoggedIn = true // Login state
+    
     var body: some View {
+        Group {
+            if isLoggedIn {
+                mainView
+            } else {
+                HomePageView() // Assuming you have a HomePageView in your project
+            }
+        }
+    }
+    
+    var mainView: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.black, .white]),
                            startPoint: .topLeading,
@@ -30,14 +41,25 @@ struct ContentView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
-                Text("Schedule Smart")
-                    .font(.system(size: 32, weight: .medium, design: .default))
-                    .foregroundColor(.white)
+                HStack {
+                    Text("Schedule Smart")
+                        .font(.system(size: 32, weight: .medium, design: .default))
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.black)
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
+                        .bold()
+                    
+                    
+                    
+                    Button(action: {
+                        isLoggedIn = false
+                    }) {
+                        Image(systemName: "rectangle.portrait.and.arrow.right") .font(.system(size: 16, weight: .bold)) .foregroundColor(.white) .padding() .background(Color.gray) .cornerRadius(8)
+                    }
                     .padding()
-                    .background(Color.black)
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
-                    .bold()
+                }
                 
                 Spacer()
                 
@@ -67,14 +89,11 @@ struct ContentView: View {
                         .tag(3)
                 }
                 .accentColor(.black)
-                
             }
-            
-            
         }
     }
-
-func sendRequest() {
+    
+    func sendRequest() {
         guard !userInput.isEmpty else { return }
         
         let userMessage = Message(content: userInput, isUserMessage: true)
@@ -97,8 +116,6 @@ func sendRequest() {
         let prompt = "Here is the schedule for the week:\n\(eventsString)\n\nUser input: \(userInput)"
         
         let apiKey = "sk-proj-ZokzbPkkeSmwc9G6kCcXT3BlbkFJvjMo8CPUxsiVlCIT7u8y"
-        
-        
         
         guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
             errorMessage = "Invalid URL"
@@ -158,7 +175,7 @@ func sendRequest() {
         
         task.resume()
     }
-
+    
     func extractEventDetails(from response: String) {
         print("Hi")
         let eventPattern = #"\b(\d{1,2}/\d{1,2}/\d{4})\b - \b(\d{1,2}:\d{2} (?:AM|PM))\b - \b(\d{1,2}:\d{2} (?:AM|PM))\b: ([^\n]+)"#
@@ -290,7 +307,7 @@ struct EventListView: View {
     @Binding var selectedDate: Date?
     @State private var showingEventCreation = false
     @ObservedObject private var calendarManager = CalendarManager()
-
+    
     var body: some View {
         ZStack {
             VStack {
